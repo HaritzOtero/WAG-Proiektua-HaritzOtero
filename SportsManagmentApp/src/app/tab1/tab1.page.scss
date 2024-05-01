@@ -1,0 +1,21 @@
+/* src/global.scss */
+ion-button{
+  margin-top: 20px;
+}
+ion-title{
+  font-size: 30px;
+}
+ion-toolbar {
+  height: 100px;
+}
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+h5 {
+  margin-top: 20px; /* Mueve el título hacia abajo para separarlo del formulario */
+}
+
+

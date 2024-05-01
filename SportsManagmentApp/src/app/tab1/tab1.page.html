@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <ion-title size="large">SPORTS CENTER APP</ion-title>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" forceOverscroll="true">
+  <div class="login">
+    <div class="image-container">
+      <img src="../../assets/img/7226646.jpg" class="sombraImg">
+    </div>
+    <div class="formularioa">
+      <h5>Email</h5>
+      <div class="input-container">
+        <ion-input  class= "custom-input"></ion-input>
+      </div>
+        <h5>Password</h5>
+        <div class="input-container">
+          <ion-input class="custom-input" type="password"></ion-input>
+        </div>
+
+        <ion-button shape="round"  class="custom-button">Login</ion-button>
+        <ion-button shape="round" (click)="registerClicked()" class="custom-button">Register</ion-button>
+        
+    </div>
+  </div>
+</ion-content>

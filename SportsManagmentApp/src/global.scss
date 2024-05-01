@@ -1,0 +1,129 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+ion-content {
+    --background: url('../src/assets/img/BackgroundImage.png') no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: fixed; /* Para mantener el fondo fijo mientras se desplaza */
+  }
+  
+  /* Estilo adicional para hacer que la página principal ocupe toda la altura de la ventana */
+  .home-page {
+    height: 100vh;
+  }
+/* src/global.scss */
+
+
+@font-face {
+    font-family: 'Inika'; /* Nombre de la fuente */
+    src: url('../src/assets/fonts/Inika/Inika-Regular.ttf') format('truetype'); /* Ruta al archivo .ttf */
+    /* Si tienes una variante (negrita, cursiva, etc.), también puedes definirla aquí */
+  }
+  
+  ion-title {
+    font-family: 'Inika', sans-serif !important; /* Aplica la fuente Inika al título */
+    text-overflow: unset;
+    white-space: unset;
+}
+  
+
+  ion-header {
+    height: 20%;
+    border: none !important; /* Elimina cualquier borde */
+    box-shadow: none !important; /* Elimina cualquier sombra */
+  }
+  
+  ion-toolbar {
+    --background: transparent !important; /* Hace que el fondo de la barra de herramientas sea transparente */
+    background: transparent !important; /* Asegura que el fondo sea transparente */
+  }
+  
+  ion-title {
+    color: black !important; /* Cambia el color del texto del título */
+    font-family: 'Inika', sans-serif !important; /* Aplica la fuente Inika al título */
+    text-align: center;
+    margin-top: 15px;
+    /* Además de la fuente, puedes añadir otros estilos como tamaño de fuente, peso, etc. */
+  }
+  .formularioa {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente los elementos en el eje X */
+  }
+  .input-container {
+    margin-top: 10px;
+    width: 300px;
+    background-color: white;
+    border-radius: 50px;
+    border: 2px solid black;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra el contenido verticalmente */
+  }
+
+  .custom-input {
+    width: 200px; /* Establece un ancho de 100px */
+  }
+
+  ion-button{
+    --background: white;
+    --font-family: 'Inika', sans-serif !important; /* Aplica la fuente Inika al título */
+    --color: black;
+    --font-family:
+    --border-radius: 50;
+    --border-color: #000;
+    --border-style: solid;
+    --border-width: 1px;
+    --box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .sombraImg {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    max-width: 100%;
+    height: 150px;
+    width: 150px;
+  }
+
+  ion-content{
+    --overflow: hidden
+  }
+ /* src/global.scss */
+
+
