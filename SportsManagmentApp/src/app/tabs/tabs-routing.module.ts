@@ -20,6 +20,25 @@ const routes: Routes = [
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
       {
+        path: 'gimnasioErreserba',
+        loadChildren: () => import('../gimnasio-erreserba/gimnasio-erreserba.module').then(m => m.GimnasioErreserbaPageModule)
+      },
+
+      {
+        path: 'gimnasioGestioa',
+        loadChildren: () => import('../gimnasio-gestioa/gimnasio-gestioa.module').then(m => m.GimnasioGestioaPageModule)
+      },
+
+      {
+        path: 'igerilekuGestioa',
+        loadChildren: () => import('../igerileku-gestioa/igerileku-gestioa.module').then(m => m.IgerilekuGestioaPageModule)
+      },
+
+      {
+        path: 'kaleAlokairua',
+        loadChildren: () => import('../kale-alokairua/kale-alokairua.module').then(m => m.KaleAlokairuaPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

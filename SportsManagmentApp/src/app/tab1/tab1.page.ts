@@ -13,4 +13,8 @@ export class Tab1Page {
   registerClicked() {
     this.router.navigate(['/tabs/tab3']);
   }
+
+  loginClicked() {
+    this.router.navigate(['/tabs/tab2']);
+  }
 }
