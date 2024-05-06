@@ -10,6 +10,7 @@ use App\Http\Controllers\KaleaController;
 Route::get('/usuarioas', [UsuarioaController::class, 'index']);
 Route::post('/usuarioas', [UsuarioaController::class, 'store']);
 Route::get('/usuarioas/{usuarioa}', [UsuarioaController::class, 'show']);
+Route::get('/usuarioasGetByGmail/{gmail}', [UsuarioaController::class, 'showByGmail']);
 Route::put('/usuarioas/{usuarioa}', [UsuarioaController::class, 'update']);
 Route::delete('/usuarioas/{usuarioa}', [UsuarioaController::class, 'delete']);
 
