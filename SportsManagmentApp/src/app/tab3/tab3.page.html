@@ -14,26 +14,26 @@
     <div class="formularioa">
       <div class="input-container-register">
         <label>Email:</label>
-        <ion-input class="custom-input email"></ion-input>
+        <ion-input class="custom-input email" required></ion-input>
       </div>
       <div class="input-container-register">
         <label>Izena:</label>
-        <ion-input class="custom-input izena"></ion-input>
+        <ion-input class="custom-input izena" required></ion-input>
       </div>
       <div class="input-container-register">
         <label>Abizena:</label>
-        <ion-input class="custom-input abizena"></ion-input>
+        <ion-input class="custom-input abizena" required></ion-input>
       </div>
       <div class="input-container-register">
         <label>Pasahitza:</label>
-        <ion-input class="custom-input pasahitza"></ion-input>
+        <ion-input class="custom-input pasahitza" type="password" required></ion-input>
       </div>
       <div class="input-container-register">
         <label>Errepikatu:</label>
-        <ion-input class="custom-input pasahitzaErrep" type="password"></ion-input>
+        <ion-input class="custom-input pasahitzaErrep" type="password" required></ion-input>
       </div>
       <div>
-        <ion-button shape="round" class="custom-button">Register</ion-button>
+        <ion-button shape="round" (click)="register()" class="custom-button">Register</ion-button>
         <ion-button shape="round" (click)="backClicked()" class="back-button">
           <img slot="start" src="../../assets/img/Undo.png">
         </ion-button>
