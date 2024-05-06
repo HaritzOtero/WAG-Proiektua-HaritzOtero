@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class IgerilekuErreserba extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'kalea_id',
+        'igerileku_erreserba_ordua',
+        'igerileku_erreserba_eguna'
+    ];
 }

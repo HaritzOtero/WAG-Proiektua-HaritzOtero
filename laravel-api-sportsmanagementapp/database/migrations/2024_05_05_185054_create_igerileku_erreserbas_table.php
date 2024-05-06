@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('igeileku_erreserba_ordua', 50)->nullable(false);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('usuarioas');
-            $table->foreign('kalea_id')->references('id')->on('kaleas');
+            $table->foreign('user_id')->references('id')->on('usuarioas')->onDelete('cascade');
+            $table->foreign('kalea_id')->references('id')->on('kaleas')->onDelete('cascade');
         });
     }
 

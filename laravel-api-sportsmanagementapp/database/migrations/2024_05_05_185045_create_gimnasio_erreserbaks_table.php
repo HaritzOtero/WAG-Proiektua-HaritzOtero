@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('gimnasio_erreserbaks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->nullable(false);
-            $table->integer('gela_id')->unsigned()->nullable(false);
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('gela_id');
             $table->string('gym_erreserba_ordua', 50)->nullable(false);
             $table->date('gym_erreserba_eguna')->nullable(false);
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('usuarioas');
-            $table->foreign('gela_id')->references('id')->on('gelas');
+        
+            $table->foreign('user_id')->references('id')->on('usuarioas')->onDelete('cascade');
+            $table->foreign('gela_id')->references('id')->on('gelas')->onDelete('cascade');
         });
+        
     }
 
     /**

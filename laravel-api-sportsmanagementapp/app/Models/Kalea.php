@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Kalea extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'kalea_izena',
+    ];
 }

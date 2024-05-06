@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Gela extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'gela_izena',
+        'pertsona_kopMax'
+    ];
 }
