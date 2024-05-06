@@ -6,9 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
-  public userId: string;
 
   constructor() {
-    this.userId = ''; // Inicializamos la variable userId aquí
   }
 }

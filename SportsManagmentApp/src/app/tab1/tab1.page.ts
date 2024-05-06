@@ -9,7 +9,6 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -19,28 +18,30 @@ export class Tab1Page {
   registerClicked() {
     this.router.navigate(['/tabs/tab3']);
   }
-  
+
   async loginClicked() {
     const gmail = (document.querySelector('.email') as HTMLInputElement).value;
     const password = (document.querySelector('.pasahitza') as HTMLInputElement).value;
-  
-    // Realizar una solicitud HTTP para obtener la contraseña del usuario
-    this.http.get<any>('http://localhost:8000/api/usuarioasGetByGmail/' + gmail).subscribe(async (response: any) => {
-      if (response.password === password) {
-        await this.presentAlert('Bienvenido', 'Hola ' + response.izena);
-        this.router.navigate(['/tabs/tab2']);
-      } else {
-        // Si la contraseña no coincide, mostrar un mensaje de error
-        await this.presentAlert('Error', 'Correo electrónico o contraseña incorrectos');
+
+    this.http.get<any>('http://localhost:8000/api/usuarioasGetByGmail/' + gmail).subscribe(
+      async (response: any) => {
+        if (response.password === password) {
+          // Obtener el ID del usuario
+          var userId = response.id;
+          await this.presentAlert('Bienvenido', 'Hola ' + response.izena);
+          console.log(userId)
+          // Navegar a TabsPage y pasar el userId como parámetro
+          this.router.navigate(['/tabs/tab2'], { state: { userId: userId } });
+        } else {
+          await this.presentAlert('Error', 'Correo electrónico o contraseña incorrectos');
+        }
+      },
+      async error => {
+        console.error('Error:', error);
+        await this.presentAlert('Error', 'Usuario o contraseña incorrectos.');
       }
-    }, async error => {
-      // Manejar cualquier error de la solicitud HTTP
-      console.error('Error:', error);
-      await this.presentAlert('Error', 'Usuario o contraseña incorrectos.');
-    });
+    );
   }
-  
-  
 
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({

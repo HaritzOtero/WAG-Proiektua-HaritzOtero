@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <ion-title size="large">GELA EDITATU</ion-title>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" forceOverscroll="true">
+  <div class="login">
+    <div class="formularioa">
+      <h5>Gela izena:</h5>
+      <div class="input-container-register">
+        <ion-input class="custom-input" required [(ngModel)]="gelaIzena"></ion-input>
+      </div>
+      <h5>Pertsona kopuru maximoa</h5>
+      <div class="input-container-register">
+        <ion-input class="custom-input" required [(ngModel)]="pertsonaKopuruMax"></ion-input>
+      </div>
+      
+      <div>
+        <ion-button shape="round" (click)="save()" class="custom-button">Gorde</ion-button>
+        <ion-button shape="round" (click)="backClicked()" class="back-button">
+          <img slot="start" src="../../assets/img/Undo.png">
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+

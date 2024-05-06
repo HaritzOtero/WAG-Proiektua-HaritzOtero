@@ -38,6 +38,22 @@ const routes: Routes = [
         path: 'kaleAlokairua',
         loadChildren: () => import('../kale-alokairua/kale-alokairua.module').then(m => m.KaleAlokairuaPageModule)
       },
+
+      {
+        path: 'editGela',
+        loadChildren: () => import('../edit-gela/edit-gela.module').then(m => m.EditGelaPageModule)
+      },
+
+      {
+        path: 'kaleAlokairua',
+        loadChildren: () => import('../edit-kalea/edit-kalea.module').then(m => m.EditKaleaPageModule)
+      },
+
+      {
+        path: 'gelaGehitu',
+        loadChildren: () => import('../gela-gehitu/gela-gehitu.module').then(m => m.GelaGehituPageModule)
+      },
+      
       {
         path: '',
         redirectTo: '/tabs/tab1',
