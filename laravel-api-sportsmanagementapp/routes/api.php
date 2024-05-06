@@ -7,11 +7,6 @@ use App\Http\Controllers\IgerilekuErreserbakController;
 use App\Http\Controllers\GimnasioErreserbakController;
 use App\Http\Controllers\KaleaController;
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/usuarioas', [UsuarioaController::class, 'index']);
 Route::post('/usuarioas', [UsuarioaController::class, 'store']);
 Route::get('/usuarioas/{usuarioa}', [UsuarioaController::class, 'show']);

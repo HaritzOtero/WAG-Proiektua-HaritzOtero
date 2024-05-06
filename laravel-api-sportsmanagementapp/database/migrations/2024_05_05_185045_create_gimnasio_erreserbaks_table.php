@@ -19,8 +19,8 @@ return new class extends Migration
             $table->date('gym_erreserba_eguna')->nullable(false);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('user_id')->on('usuarioas');
-            $table->foreign('gela_id')->references('gela_id')->on('gelas');
+            $table->foreign('user_id')->references('id')->on('usuarioas');
+            $table->foreign('gela_id')->references('id')->on('gelas');
         });
     }
 

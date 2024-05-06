@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('igerileku_erreserbas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable(false);
+            $table->integer('kalea_id')->unsigned()->nullable(false);
             $table->date('igerileku_erreserba_eguna')->nullable(false);
             $table->string('igeileku_erreserba_ordua', 50)->nullable(false);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('user_id')->on('usuarioas');
+            $table->foreign('user_id')->references('id')->on('usuarioas');
+            $table->foreign('kalea_id')->references('id')->on('kaleas');
         });
     }
 
