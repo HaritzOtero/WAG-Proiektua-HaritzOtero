@@ -9,14 +9,15 @@
 <ion-content [fullscreen]="true" forceOverscroll="true">
   <div class="login">
     <div class="formularioa">
-      <div class="input-container-gela">
-        <label>Gela izena:</label>
-        <ion-input class="back-button" required [(ngModel)]="gelaIzena"></ion-input>
+      <h5>Gela izena:</h5>
+      <div class="input-container-register">
+        <ion-input class="custom-input" required [(ngModel)]="gelaIzena"></ion-input>
       </div>
-      <div class="input-container-gela">
-        <label>Pertsona kopuru maximoa</label>
-        <ion-input class="back-button" required [(ngModel)]="pertsonaKopuruMax"></ion-input>
+      <h5>Pertsona kopuru maximoa</h5>
+      <div class="input-container-register">
+        <ion-input class="custom-input" required [(ngModel)]="pertsonaKopuruMax"></ion-input>
       </div>
+      
       <div>
         <ion-button shape="round" (click)="save()" class="custom-button">Gorde</ion-button>
         <ion-button shape="round" (click)="backClicked()" class="back-button">

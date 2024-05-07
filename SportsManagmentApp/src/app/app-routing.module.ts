@@ -13,7 +13,11 @@ const routes: Routes = [
   {
     path: 'edit-kalea',
     loadChildren: () => import('./edit-kalea/edit-kalea.module').then( m => m.EditKaleaPageModule)
+  },  {
+    path: 'kalea-gehitu',
+    loadChildren: () => import('./kalea-gehitu/kalea-gehitu.module').then( m => m.KaleaGehituPageModule)
   },
+
 
 
 ];

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
+import { GimnasioGestioaPage } from '../gimnasio-gestioa/gimnasio-gestioa.page';
 
 @Component({
   selector: 'app-gela-gehitu',
@@ -15,11 +16,28 @@ export class GelaGehituPage implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute, // Agrega ActivatedRoute para recibir los parámetros de la ruta
+    private route: ActivatedRoute,
     private http: HttpClient,
-    private alertController: AlertController
-  ) { }
+    private alertController: AlertController,
+  ) {
+    route.params.subscribe(val => {
+      // Obtener el userId de los parámetros de la ruta
+    this.route.paramMap.subscribe(params => {
+      this.userId = params.get('userId');
+    });
 
+    console.log(this.userId);
+    });
+  }
+  ionViewDidEnter(){
+    // Obtener el userId de los parámetros de la ruta
+    this.route.paramMap.subscribe(params => {
+      this.userId = params.get('userId');
+    });
+
+    console.log(this.userId);
+  }
+  
   ngOnInit() {
     // Obtener el userId de los parámetros de la ruta
     this.route.paramMap.subscribe(params => {
@@ -53,6 +71,10 @@ export class GelaGehituPage implements OnInit {
   }
 
   backClicked() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+  }
+  this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/tabs/gimnasioGestioa'], { state: { userId: this.userId } });
   }
 }

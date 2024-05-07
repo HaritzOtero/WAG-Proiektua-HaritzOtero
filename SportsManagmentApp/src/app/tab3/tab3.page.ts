@@ -16,6 +16,10 @@ export class Tab3Page {
   ) {}
 
   backClicked() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+  }
+  this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/tabs/tab1']);
   }
 

@@ -13,19 +13,27 @@ export class GimnasioGestioaPage implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute, // Agregar ActivatedRoute
-    private http: HttpClient
-  ) {}
-
-  ngOnInit() {
-    // Obtener el userId de los parámetros de la ruta
-    this.route.paramMap.subscribe(params => {
-      this.userId = params.get('userId');
-    });
-    console.log(this.userId)
-    this.getKaleakList(); // Llamar a la función para obtener la lista de kaleak al inicializar la página
+    private route: ActivatedRoute,
+    private http: HttpClient,
+  ) {
   }
 
+  ngOnInit() {
+    const state = this.router.getCurrentNavigation()?.extras.state;
+    if (state && state['userId']) {
+      this.userId = state['userId'];
+      console.log(this.userId);
+      this.getKaleakList();
+    }
+  }
+  ionViewDidEnter() {
+    const state = this.router.getCurrentNavigation()?.extras.state;
+    if (state && state['userId']) {
+      this.userId = state['userId'];
+      console.log(this.userId);
+    }
+    this.getKaleakList();
+  }
   // Método para obtener la lista de kaleak desde la API
   getKaleakList() {
     this.http.get<any[]>('http://localhost:8000/api/gelak').subscribe(
@@ -66,6 +74,10 @@ export class GimnasioGestioaPage implements OnInit {
   }
 
   backClicked() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+  }
+  this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/tabs/tab2'], { state: { userId: this.userId } });
   }
 }

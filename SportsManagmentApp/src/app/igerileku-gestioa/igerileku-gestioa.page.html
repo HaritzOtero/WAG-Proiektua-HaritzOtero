@@ -7,8 +7,19 @@
 <ion-content [fullscreen]="true">
   <div class="formularioa">
     <h2>KALEAK:</h2>
+    <!-- Iterar sobre la lista de kaleak -->
+    <ion-list>
+      <ion-item *ngFor="let kalea of kaleakList">
+        <!-- Mostrar el nombre de la kalea -->
+        <ion-label>{{ kalea.kalea_izena }}</ion-label>
+        <!-- Botones de eliminar y editar -->
+        <ion-button shape="round" (click)="eliminarKalea(kalea)" class="eliminar-button">Eliminar</ion-button>
+        <ion-button shape="round" (click)="editarKalea(kalea)" class="editar-button">Editar</ion-button>
+      </ion-item>
+    </ion-list>
     <ion-button shape="round" (click)="backClicked()" class="back-button">
       <img slot="start" src="../../assets/img/Undo.png">
     </ion-button>
+    <ion-button shape="round" (click)="kaleaGehitu()" class="custom-button">KALEA GEHITU</ion-button>
   </div>
 </ion-content>

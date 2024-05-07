@@ -1,0 +1,21 @@
+.input-container-register {
+    margin-top: 10px;
+    width: 300px;
+    background-color: white;
+    border-radius: 50px;
+    border: 2px solid black;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra el contenido verticalmente */
+  }
+  
+  .custom-input {
+    width: calc(100% - 20px); /* Ajusta el ancho del input */
+    height: 100%;
+    padding: 0 10px; /* Ajusta el relleno del input */
+    border: none; /* Elimina el borde del input */
+    background-color: transparent; /* Hace que el fondo del input sea transparente */
+  }
+  

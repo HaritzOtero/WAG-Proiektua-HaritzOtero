@@ -43,7 +43,10 @@ const routes: Routes = [
         path: 'editGela',
         loadChildren: () => import('../edit-gela/edit-gela.module').then(m => m.EditGelaPageModule)
       },
-
+      {
+        path: 'editKalea',
+        loadChildren: () => import('../edit-kalea/edit-kalea.module').then(m => m.EditKaleaPageModule)
+      },
       {
         path: 'kaleAlokairua',
         loadChildren: () => import('../edit-kalea/edit-kalea.module').then(m => m.EditKaleaPageModule)
@@ -54,6 +57,10 @@ const routes: Routes = [
         loadChildren: () => import('../gela-gehitu/gela-gehitu.module').then(m => m.GelaGehituPageModule)
       },
       
+      {
+        path: 'kaleaGehitu',
+        loadChildren: () => import('../kalea-gehitu/kalea-gehitu.module').then(m => m.KaleaGehituPageModule)
+      },
       {
         path: '',
         redirectTo: '/tabs/tab1',

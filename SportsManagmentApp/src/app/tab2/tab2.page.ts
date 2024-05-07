@@ -19,14 +19,16 @@ export class Tab2Page implements OnInit {
     private http: HttpClient,
     private alertController: AlertController,
     private navCtrl: NavController // Inyectar NavController
-  ) {}
-
+  ) {
+    route.params.subscribe(val => {
+      this.refreshData(); // Llamar a la función para refrescar los datos en ngOnInit
+    });
+  }
+  ionViewDidEnter(){
+    this.refreshData();
+  }
   ngOnInit() {
     this.refreshData(); // Llamar a la función para refrescar los datos en ngOnInit
-  }
-
-  ionViewWillEnter() {
-    this.refreshData(); // Llamar a la función para refrescar los datos en ionViewWillEnter
   }
 
   refreshData() {
@@ -34,6 +36,7 @@ export class Tab2Page implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
+      console.log(this.userId)
     }
 
     this.http.get<any>('http://localhost:8000/api/usuarioas/' + this.userId).pipe(
@@ -68,6 +71,10 @@ export class Tab2Page implements OnInit {
   }
 
   backClicked() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+  }
+  this.router.onSameUrlNavigation = 'reload';
     // Vaciar las variables al retroceder
     this.userId = '';
     this.router.navigate(['/tabs/tab1']);

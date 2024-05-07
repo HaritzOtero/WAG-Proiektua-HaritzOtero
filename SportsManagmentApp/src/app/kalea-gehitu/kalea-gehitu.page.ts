@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
+import { GimnasioGestioaPage } from '../gimnasio-gestioa/gimnasio-gestioa.page';
 
 @Component({
-  selector: 'app-edit-kalea',
-  templateUrl: './edit-kalea.page.html',
-  styleUrls: ['./edit-kalea.page.scss'],
+  selector: 'app-kalea-gehitu',
+  templateUrl: './kalea-gehitu.page.html',
+  styleUrls: ['./kalea-gehitu.page.scss'],
 })
-export class EditKaleaPage implements OnInit {
+export class KaleaGehituPage implements OnInit {
 
-  kaleaId: any; // Variable para almacenar el ID de la gela
   kaleaIzena: string = ''; // Variable para almacenar el nombre de la gela
   userId: any; // Variable para almacenar el userId
 
@@ -22,43 +22,35 @@ export class EditKaleaPage implements OnInit {
   ) {
     route.params.subscribe(val => {
       // Obtener el userId de los parámetros de la ruta
-    this.route.paramMap.subscribe(params => {
-      this.userId = params.get('userId');
-    });
-    console.log(this.userId);
-    
-
-    const state = this.router.getCurrentNavigation()?.extras.state;
-    if (state && state['kalea']) {
-      const kalea = state['kalea'];
-      this.kaleaId = kalea.id;
-      this.kaleaIzena = kalea.kalea_izena;
-    }
+      this.route.paramMap.subscribe(params => {
+        this.userId = params.get('userId');
+      });
+      console.log(this.userId);
     });
   }
+  ionViewDidEnter(){
+     // Obtener el userId de los parámetros de la ruta
+     this.route.paramMap.subscribe(params => {
+      this.userId = params.get('userId');
+    });
 
+    console.log(this.userId);
+  }
   ngOnInit() {
     // Obtener el userId de los parámetros de la ruta
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
     });
-    console.log(this.userId);
-    
 
-    const state = this.router.getCurrentNavigation()?.extras.state;
-    if (state && state['kalea']) {
-      const kalea = state['kalea'];
-      this.kaleaId = kalea.id;
-      this.kaleaIzena = kalea.kalea_izena;
-    }
+    console.log(this.userId);
   }
-  
-  save(){
+
+  save() {
     const formData = {
       kalea_izena: this.kaleaIzena,
     };
 
-    this.http.put('http://localhost:8000/api/kaleak/' + this.kaleaId, formData)
+    this.http.post('http://localhost:8000/api/kaleak', formData)
       .subscribe(async response => {
         await this.presentAlert();
       }, error => {
@@ -69,7 +61,7 @@ export class EditKaleaPage implements OnInit {
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: 'Kalea eguneratuta.',
+      header: 'Kalea gehituta.',
       buttons: ['OK']
     });
     await alert.present();
