@@ -26,6 +26,7 @@ export class IgerilekuGestioaPage implements OnInit {
       this.getKaleakList();
     }
   }
+  
   ionViewDidEnter() {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {

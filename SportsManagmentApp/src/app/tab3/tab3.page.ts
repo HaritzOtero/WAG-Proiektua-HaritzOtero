@@ -30,10 +30,13 @@ export class Tab3Page {
     const password = (document.querySelector('.pasahitza') as HTMLInputElement).value;
     const passwordConfirm = (document.querySelector('.pasahitzaErrep') as HTMLInputElement).value;
 
+
     if (password !== passwordConfirm) {
+        console.log(password);
+        console.log(passwordConfirm);
         // Si las contraseñas no coinciden, muestra un mensaje de error
-        this.presentErrorAlert('Las contraseñas no coinciden.');
-        return; // Sale de la función sin continuar con el registro
+        //this.presentErrorAlert('Las contraseñas no coinciden.');
+        //return; // Sale de la función sin continuar con el registro
     }
 
     let type: string;

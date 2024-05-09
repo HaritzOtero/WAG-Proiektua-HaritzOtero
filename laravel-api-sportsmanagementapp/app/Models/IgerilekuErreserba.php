@@ -12,7 +12,7 @@ class IgerilekuErreserba extends Model
     protected $fillable = [
         'user_id',
         'kalea_id',
-        'igerileku_erreserba_ordua',
-        'igerileku_erreserba_eguna'
+        'igerileku_erreserba_eguna',
+        'igeileku_erreserba_ordua'
     ];
 }

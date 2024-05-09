@@ -98,6 +98,19 @@ ion-content {
     align-items: center; /* Centra el contenido verticalmente */
   }
 
+  .selected{
+    margin-top: 10px;
+    width: 300px;
+    background-color: rgb(171, 162, 162);
+    border-radius: 50px;
+    border: 2px solid black;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra el contenido verticalmente */
+  }
+
   .custom-input {
     width: 200px; /* Establece un ancho de 100px */
   }
@@ -137,4 +150,17 @@ ion-content {
   display: flex;
   justify-content: center;
   align-items: center; /* Centra el contenido verticalmente */
+}
+
+.generated-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente línea */
+  justify-content: space-between; /* Distribuye los elementos a lo largo del contenedor */
+  max-width: 300px;
+  margin-top: 5%;
+}
+
+.generated-buttons ion-button {
+  width: calc(33.33% - 10px); /* Ancho del botón para mostrar tres columnas */
+  margin-bottom: 10px; /* Espacio entre los botones */
 }

@@ -13,8 +13,12 @@
         <!-- Mostrar el nombre de la kalea -->
         <ion-label>{{ gela.gela_izena }}</ion-label>
         <!-- Botones de eliminar y editar -->
-        <ion-button shape="round" (click)="eliminarGela(gela)" class="eliminar-button">Eliminar</ion-button>
-        <ion-button shape="round" (click)="editarGela(gela)" class="editar-button">Editar</ion-button>
+        <ion-button shape="round" (click)="eliminarGela(gela)" class="eliminar-button">
+          <img slot="start" src="../../assets/img/Delete.png">
+        </ion-button>
+        <ion-button shape="round" (click)="editarGela(gela)" class="editar-button">
+          <img slot="start" src="../../assets/img/Edit.png">
+        </ion-button>
       </ion-item>
     </ion-list>
     <ion-button shape="round" (click)="backClicked()" class="back-button">
