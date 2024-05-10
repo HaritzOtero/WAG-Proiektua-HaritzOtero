@@ -6,8 +6,32 @@
 
 <ion-content [fullscreen]="true">
   <div class="formularioa">
+    <div class="filtros">
+      <!-- Input de tipo date con datepicker -->
+      <div class="input-container">
+        <ion-label>Aukeratu eguna:</ion-label>
+        <input class="eguna" type="date" [(ngModel)]="selectedDate" (change)="checkSelections()">
+
+      </div>
+      <!-- Select con opciones generadas dinámicamente desde kaleakList -->
+      <div class="input-container">
+        <ion-label>Gela:</ion-label>
+        <ion-select class="select" [(ngModel)]="selectedGela" (ionChange)="checkSelections()" (ionSelect)="checkSelections()">
+          <ion-select-option *ngFor="let option of gelakList" [value]="option.id">{{ option.gela_izena }}</ion-select-option>
+        </ion-select>
+        
+      </div>
+      
+    </div>
+    <div class="generated-buttons">
+      
+    </div>
+    <ion-button shape="round" (click)="alokatu()" class="back-button">
+      Alokatu!
+    </ion-button>
     <ion-button shape="round" (click)="backClicked()" class="back-button">
       <img slot="start" src="../../assets/img/Undo.png">
     </ion-button>
   </div>
 </ion-content>
+

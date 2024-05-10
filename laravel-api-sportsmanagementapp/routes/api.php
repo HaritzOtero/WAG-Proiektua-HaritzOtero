@@ -30,6 +30,7 @@ Route::delete('/IgerilekuErreserbak/{IgerilekuErreserba}', [IgerilekuErreserbakC
 
 Route::get('/GimnasioErreserbak', [GimnasioErreserbakController::class, 'index']);
 Route::post('/GimnasioErreserbak', [GimnasioErreserbakController::class, 'store']);
+Route::get('/GetLibreOrduakGelak/{gela_id}/{eguna}', [GimnasioErreserbakController::class, 'getOrduakGelakin']);
 Route::get('/GimnasioErreserbak/{GimnasioErreserba}', [GimnasioErreserbakController::class, 'show']);
 Route::put('/GimnasioErreserbak/{GimnasioErreserba}', [GimnasioErreserbakController::class, 'update']);
 Route::delete('/GimnasioErreserbak/{GimnasioErreserba}', [GimnasioErreserbakController::class, 'delete']);
