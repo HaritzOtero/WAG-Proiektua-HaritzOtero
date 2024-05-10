@@ -16,9 +16,10 @@
       <!-- Select con opciones generadas dinámicamente desde kaleakList -->
       <div class="input-container">
         <ion-label>Kalea:</ion-label>
-        <ion-select class="select" [(ngModel)]="selectedKalea" (ionChange)="checkSelections()">
-          <ion-select-option *ngFor="let option of kaleakList" [value]={{option.kalea_id}}>{{ option.kalea_izena }}</ion-select-option>
+        <ion-select class="select" [(ngModel)]="selectedKalea" (ionChange)="checkSelections()" (ionSelect)="checkSelections()">
+          <ion-select-option *ngFor="let option of kaleakList" [value]="option.id">{{ option.kalea_izena }}</ion-select-option>
         </ion-select>
+        
       </div>
       
     </div>

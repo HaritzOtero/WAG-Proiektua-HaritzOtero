@@ -67,9 +67,7 @@ export class KaleAlokairuaPage implements OnInit {
   }
   
   loadButtons() {
-    if (!this.orduakList || !this.orduakList.length) {
-      return;
-    }
+ 
   
     const generatedButtonsContainer = document.querySelector('.generated-buttons');
     if (!generatedButtonsContainer) {
@@ -78,7 +76,6 @@ export class KaleAlokairuaPage implements OnInit {
     }
     
     generatedButtonsContainer.innerHTML = "";
-  this.getKalearenOrduak();
   console.log(this.orduakList)
   this.orduakList.forEach((element: any) => {
   const button = document.createElement('ion-button');
@@ -103,14 +100,6 @@ export class KaleAlokairuaPage implements OnInit {
     const buttonText = clickedButton.innerText;
     this.selectedOrdua = buttonText;
   }
-  closeDatePicker(event: any) {
-    // Verificar si se ha seleccionado una fecha
-    if (event && event.detail && event.detail.value) {
-      // Asignar la fecha seleccionada a selectedDate
-      this.selectedDate = event.detail.value;
-    }
-  }
-  
    alokatu() {
     const data = (document.querySelector('.eguna') as HTMLInputElement).value;
     const kalea = (document.querySelector('.select') as HTMLInputElement).value;
@@ -127,29 +116,31 @@ export class KaleAlokairuaPage implements OnInit {
   this.http.post('http://localhost:8000/api/IgerilekuErreserbak', formData)
     .subscribe(async response => {
       console.log('Registro exitoso:', response);
-      await this.presentAlert(kalea,data,this.selectedOrdua);
+      await this.presentAlert(data,this.selectedOrdua);
     }, error => {
       console.error('Error al registrar:', error);
       // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
     });
   }
-  getKalearenOrduak(){
+  getKalearenOrduak() {
     const formattedDate = new Date(this.selectedDate).toISOString().split('T')[0];
-    console.log('http://localhost:8000/api/GetLibreOrduak/' + this.selectedKalea.id + '/'+ formattedDate)
-    this.http.get<any[]>('http://localhost:8000/api/GetLibreOrduak/' + this.selectedKalea.id + '/'+ formattedDate).subscribe(
+    console.log('http://localhost:8000/api/GetLibreOrduak/' + this.selectedKalea + '/' + formattedDate)
+    this.http.get<any[]>('http://localhost:8000/api/GetLibreOrduak/' + this.selectedKalea + '/' + formattedDate).subscribe(
       (response: any[]) => {
         this.orduakList = response; // Asignar la respuesta a la lista de kaleak
+        this.loadButtons(); // Llamar a loadButtons() después de que se haya asignado this.orduakList
       },
       error => {
         console.error('Error:', error);
       }
     );
-  }
+}
 
-  async presentAlert(kalea: string, data: string, selectedOrdua: string) {
+
+  async presentAlert(data: string, selectedOrdua: string) {
     const alert = await this.alertController.create({
-      header: '¡Reserva confirmada!',
-      message: 'Tu reserva: calle: ' + kalea + ', día: ' + data + ', hora: ' + selectedOrdua,
+      header: 'Zure zain gaude!',
+      message: 'Zure erreserba: Eguna: ' + data + ', ordua: ' + selectedOrdua,
       buttons: [
         {
           text: 'Vale',
