@@ -8,13 +8,14 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./gimnasio-erreserba.page.scss'],
 })
 export class GimnasioErreserbaPage implements OnInit {
-
+ erreserbaKop:any;
+ pertsonaKopMax:any;
   gelakList:any;  
   userId: any; // Variable para almacenar el userId
   selectedGela: any;
   selectedDate:any;
   selectedOrdua:any;
-  orduakList:any;
+  orduakList: string[] = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00','14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
   minDate: any;
   constructor(
     private router: Router,
@@ -52,7 +53,6 @@ export class GimnasioErreserbaPage implements OnInit {
     if (this.selectedDate && this.selectedGela) {
       console.log('Fecha seleccionada:', this.selectedDate);
       console.log('Opción seleccionada:', this.selectedGela);
-      this.getgelarenOrduak();
       this.loadButtons();
     }
   }
@@ -69,7 +69,6 @@ export class GimnasioErreserbaPage implements OnInit {
   
   loadButtons() {
  
-  
     const generatedButtonsContainer = document.querySelector('.generated-buttons');
     if (!generatedButtonsContainer) {
       console.error('No se encontró el contenedor para los botones generados.');
@@ -101,41 +100,66 @@ export class GimnasioErreserbaPage implements OnInit {
     const buttonText = clickedButton.innerText;
     this.selectedOrdua = buttonText;
   }
-   alokatu() {
+    alokatu() {
     const data = (document.querySelector('.eguna') as HTMLInputElement).value;
     const gela = (document.querySelector('.select') as HTMLInputElement).value;
-    console.log(this.userId)
-    const formData = {
-      user_id: this.userId,
-      gela_id: gela,
-      gym_erreserba_eguna: data,
-      gym_erreserba_ordua: this.selectedOrdua
-  };
 
-  console.log(formData)
-
-  this.http.post('http://localhost:8000/api/GimnasioErreserbak', formData)
-    .subscribe(async response => {
-      console.log('Registro exitoso:', response);
-      await this.presentAlert(data,this.selectedOrdua);
-    }, error => {
-      console.error('Error al registrar:', error);
-      // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
-    });
-  }
-  getgelarenOrduak() {
-    const formattedDate = new Date(this.selectedDate).toISOString().split('T')[0];
-    console.log('http://localhost:8000/api/GetLibreOrduakGelak/' + this.selectedGela + '/' + formattedDate)
-    this.http.get<any[]>('http://localhost:8000/api/GetLibreOrduakGelak/' + this.selectedGela + '/' + formattedDate).subscribe(
+    console.log('http://localhost:8000/api/GetPertsonaErreserbatutaGelaEgunOrdu/' + this.selectedGela + '/' + data + '/' + this.selectedOrdua)
+    
+    this.http.get<any[]>('http://localhost:8000/api/GetPertsonaErreserbatutaGelaEgunOrdu/' + this.selectedGela + '/' + data + '/' + this.selectedOrdua).subscribe(
       (response: any[]) => {
-        this.orduakList = response; // Asignar la respuesta a la lista de gelak
-        this.loadButtons(); // Llamar a loadButtons() después de que se haya asignado this.orduakList
+        // Coloca aquí el código que depende de la variable erreserbaKop
+       this.erreserbaKop = response; // Asignar la respuesta a la variable erreserbaKop
+        console.log('Erreserba kop: ', this.erreserbaKop);
+    
+        // Aquí puedes llamar a otras funciones o realizar otras operaciones que dependan de erreserbaKop
       },
       error => {
         console.error('Error:', error);
       }
     );
-}
+    
+    console.log('http://localhost:8000/api/getPertsonaKopMaxGela/' + this.selectedGela);
+    this.http.get<any[]>('http://localhost:8000/api/getPertsonaKopMaxGela/' + this.selectedGela).subscribe(
+      (response: any[]) => {
+        // Coloca aquí el código que depende de la variable pertsonaKopMax
+        const pertsonaKopMax = response; // Asignar la respuesta a la variable pertsonaKopMax
+        console.log('Pertsona kopuru max: ', pertsonaKopMax);
+    
+        console.log('Erreserba kop: ', this.erreserbaKop)
+        console.log('Pertsona kopuru max: ', pertsonaKopMax)    
+    
+        if (this.erreserbaKop !== undefined && pertsonaKopMax !== undefined && this.erreserbaKop >= pertsonaKopMax) {
+          this.presentAlertErreserbaTopea();
+          return;
+        }
+    
+        console.log(this.userId)
+        const formData = {
+          user_id: this.userId,
+          gela_id: gela,
+          gym_erreserba_eguna: data,
+          gym_erreserba_ordua: this.selectedOrdua
+      };
+    
+      console.log(formData)
+    
+      this.http.post('http://localhost:8000/api/GimnasioErreserbak', formData)
+        .subscribe(async response => {
+          console.log('Registro exitoso:', response);
+          await this.presentAlert(data,this.selectedOrdua);
+        }, error => {
+          console.error('Error al registrar:', error);
+          // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
+        });
+      },
+      error => {
+        console.error('Error:', error);
+      }
+    );
+    
+   
+  }
 
 
   async presentAlert(data: string, selectedOrdua: string) {
@@ -153,6 +177,18 @@ export class GimnasioErreserbaPage implements OnInit {
     });
 
     await alert.present();
+}
+
+ 
+presentAlertErreserbaTopea() {
+  this.alertController.create({
+    header: 'Gela beteta ordu horretan',
+    buttons: [
+      {
+        text: 'Vale',
+      }
+    ]
+  }).then(alert => alert.present());
 }
 
 

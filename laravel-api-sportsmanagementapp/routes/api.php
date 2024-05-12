@@ -32,11 +32,14 @@ Route::get('/GimnasioErreserbak', [GimnasioErreserbakController::class, 'index']
 Route::post('/GimnasioErreserbak', [GimnasioErreserbakController::class, 'store']);
 Route::get('/GetLibreOrduakGelak/{gela_id}/{eguna}', [GimnasioErreserbakController::class, 'getOrduakGelakin']);
 Route::get('/GimnasioErreserbak/{GimnasioErreserba}', [GimnasioErreserbakController::class, 'show']);
+Route::get('/GetPertsonaErreserbatutaGelaEgunOrdu/{gela_id}/{eguna}/{ordua}', [GimnasioErreserbakController::class, 'getPertsonaKopuruErreserbatuta']);
+
 Route::put('/GimnasioErreserbak/{GimnasioErreserba}', [GimnasioErreserbakController::class, 'update']);
 Route::delete('/GimnasioErreserbak/{GimnasioErreserba}', [GimnasioErreserbakController::class, 'delete']);
 
 Route::get('/gelak', [GelaController::class, 'index']);
 Route::post('/gelak', [GelaController::class, 'store']);
 Route::get('/gelak/{gela}', [GelaController::class, 'show']);
+Route::get('/getPertsonaKopMaxGela/{gelaId}', [GelaController::class, 'getPertsonaKopMaxGela']);
 Route::put('/gelak/{gela}', [GelaController::class, 'update']);
 Route::delete('/gelak/{gela}', [GelaController::class, 'delete']);

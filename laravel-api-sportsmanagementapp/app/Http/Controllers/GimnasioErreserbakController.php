@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\GimnasioErreserbak;
+use App\Models\Gela;
 class GimnasioErreserbakController extends Controller
 {
     public function index()
@@ -23,7 +24,7 @@ class GimnasioErreserbakController extends Controller
                                              ->where('gym_erreserba_eguna', $eguna)
                                              ->pluck('gym_erreserba_ordua')
                                              ->toArray();
-    
+        
         // Generar todas las horas del día desde las 8:00 hasta las 21:00
         $horasDelDia = [];
         $horaInicio = 8;
@@ -43,6 +44,16 @@ class GimnasioErreserbakController extends Controller
     
         // Retornar el array de horas disponibles
         return response()->json($horasDelDia, 200);
+    }
+    public function getPertsonaKopuruErreserbatuta($gela_id, $eguna, $ordua){
+        // Contar el número de reservas para la gela específica ($gela_id), en el día específico ($eguna) y a la hora específica ($ordua)
+        $reservasCount = GimnasioErreserbak::where('gela_id', $gela_id)
+                                            ->where('gym_erreserba_eguna', $eguna)
+                                            ->where('gym_erreserba_ordua', $ordua)
+                                            ->count();
+        
+        // Retornar el número de reservas encontradas
+        return $reservasCount;
     }
     public function show(GimnasioErreserbak $gimnasioErreserba)
     {

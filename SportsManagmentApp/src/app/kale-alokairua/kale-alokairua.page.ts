@@ -67,7 +67,6 @@ export class KaleAlokairuaPage implements OnInit {
   }
   
   loadButtons() {
- 
   
     const generatedButtonsContainer = document.querySelector('.generated-buttons');
     if (!generatedButtonsContainer) {
@@ -76,13 +75,13 @@ export class KaleAlokairuaPage implements OnInit {
     }
     
     generatedButtonsContainer.innerHTML = "";
-  console.log(this.orduakList)
-  this.orduakList.forEach((element: any) => {
-  const button = document.createElement('ion-button');
-  button.setAttribute('shape', 'round');
-  button.setAttribute('class', 'back-button');
-  button.innerText = element;
-  button.addEventListener('click', (event) => this.orduaClicked(event)); // Agrega el evento click
+    console.log(this.orduakList)
+    this.orduakList.forEach((element: any) => {
+    const button = document.createElement('ion-button');
+    button.setAttribute('shape', 'round');
+    button.setAttribute('class', 'back-button');
+    button.innerText = element;
+    button.addEventListener('click', (event) => this.orduaClicked(event)); // Agrega el evento click
 
   generatedButtonsContainer.appendChild(button);
 });

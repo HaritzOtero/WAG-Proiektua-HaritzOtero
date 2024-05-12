@@ -23,6 +23,14 @@ class GelaController extends Controller
     {
         return $gela;
     }
+    public function getPertsonaKopMaxGela($gelaId){
+        // Obtener el valor del campo pertsona_kopMax para la gela con el ID proporcionado
+        $pertsonaKopMax = Gela::where('id', $gelaId)->value('pertsona_kopMax');
+        
+        // Retornar el valor encontrado
+        return $pertsonaKopMax;
+    }
+    
     public function update(Request $request, Gela $gela)
     {
         $gela->update($request->all());
