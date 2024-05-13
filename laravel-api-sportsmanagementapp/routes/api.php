@@ -29,15 +29,19 @@ Route::get('/GetIgerilekuErreserbakUsuario/{usuario_id}', [IgerilekuErreserbakCo
 Route::get('/GetIgerilekuErreserbakUsuarioEguneko/{usuario_id}/{eguna}', [IgerilekuErreserbakController::class, 'getIgerilekuErreserbakUsuarioEguneko']);
 Route::put('/IgerilekuErreserbak/{IgerilekuErreserba}', [IgerilekuErreserbakController::class, 'update']);
 Route::delete('/IgerilekuErreserbak/{IgerilekuErreserba}', [IgerilekuErreserbakController::class, 'delete']);
+Route::delete('/IgerrilekuErreserbaZaharrakEzabatu', [IgerilekuErreserbakController::class, 'ezabatuZaharrak']);
 
 Route::get('/GimnasioErreserbak', [GimnasioErreserbakController::class, 'index']);
 Route::post('/GimnasioErreserbak', [GimnasioErreserbakController::class, 'store']);
+Route::get('/GetGimnasioErreserbakUsuario/{usuario_id}', [GimnasioErreserbakController::class, 'getGimnasioErreserbakUsuario']);
+Route::get('/GetGimnasioErreserbakUsuarioEguneko/{usuario_id}/{eguna}', [GimnasioErreserbakController::class, 'getGimnasioErreserbakUsuarioEguneko']);
 Route::get('/GetLibreOrduakGelak/{gela_id}/{eguna}', [GimnasioErreserbakController::class, 'getOrduakGelakin']);
 Route::get('/GimnasioErreserbak/{GimnasioErreserba}', [GimnasioErreserbakController::class, 'show']);
 Route::get('/GetPertsonaErreserbatutaGelaEgunOrdu/{gela_id}/{eguna}/{ordua}', [GimnasioErreserbakController::class, 'getPertsonaKopuruErreserbatuta']);
-
 Route::put('/GimnasioErreserbak/{GimnasioErreserba}', [GimnasioErreserbakController::class, 'update']);
 Route::delete('/GimnasioErreserbak/{GimnasioErreserba}', [GimnasioErreserbakController::class, 'delete']);
+Route::delete('/GimnasioErreserbaZaharrakEzabatu', [GimnasioErreserbakController::class, 'ezabatuZaharrakGym']);
+
 
 Route::get('/gelak', [GelaController::class, 'index']);
 Route::post('/gelak', [GelaController::class, 'store']);

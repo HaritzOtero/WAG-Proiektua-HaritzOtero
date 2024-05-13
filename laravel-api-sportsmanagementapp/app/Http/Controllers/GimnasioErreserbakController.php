@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GimnasioErreserbak;
 use App\Models\Gela;
+use Carbon\Carbon;
 class GimnasioErreserbakController extends Controller
 {
     public function index()
@@ -54,6 +55,22 @@ class GimnasioErreserbakController extends Controller
         
         // Retornar el número de reservas encontradas
         return $reservasCount;
+    }
+    public function getGimnasioErreserbakUsuario($usuario_id){
+        $gimnasioErreserbaTotala = GimnasioErreserbak::where('user_id', $usuario_id)->count();
+        return $gimnasioErreserbaTotala;                       
+    }
+    public function ezabatuZaharrakGym(){
+        // Obtener la fecha de hoy formateada
+        $hoy = Carbon::today()->toDateString();
+        
+        // Eliminar los registros anteriores a la fecha de hoy
+        GimnasioErreserbak::whereDate('gym_erreserba_eguna', '<', $hoy)
+            ->delete();
+    }
+    public function getGimnasioErreserbakUsuarioEguneko($usuario_id,$eguna){
+        $horasReservadas = GimnasioErreserbak::where('user_id', $usuario_id)->where('gym_erreserba_eguna', $eguna)->count();
+        return response()->json($horasReservadas,201);       
     }
     public function show(GimnasioErreserbak $gimnasioErreserba)
     {

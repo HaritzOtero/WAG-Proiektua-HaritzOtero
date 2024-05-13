@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-gimnasio-erreserba',
   templateUrl: './gimnasio-erreserba.page.html',
   styleUrls: ['./gimnasio-erreserba.page.scss'],
 })
 export class GimnasioErreserbaPage implements OnInit {
+  pertsonaErreserbKop:any;
+  pertsonaErreserbaKopTotala:any;
  erreserbaKop:any;
  pertsonaKopMax:any;
   gelakList:any;  
@@ -100,65 +103,53 @@ export class GimnasioErreserbaPage implements OnInit {
     const buttonText = clickedButton.innerText;
     this.selectedOrdua = buttonText;
   }
-    alokatu() {
+  alokatu() {
     const data = (document.querySelector('.eguna') as HTMLInputElement).value;
     const gela = (document.querySelector('.select') as HTMLInputElement).value;
-
-    console.log('http://localhost:8000/api/GetPertsonaErreserbatutaGelaEgunOrdu/' + this.selectedGela + '/' + data + '/' + this.selectedOrdua)
-    
-    this.http.get<any[]>('http://localhost:8000/api/GetPertsonaErreserbatutaGelaEgunOrdu/' + this.selectedGela + '/' + data + '/' + this.selectedOrdua).subscribe(
-      (response: any[]) => {
-        // Coloca aquí el código que depende de la variable erreserbaKop
-       this.erreserbaKop = response; // Asignar la respuesta a la variable erreserbaKop
-        console.log('Erreserba kop: ', this.erreserbaKop);
-    
-        // Aquí puedes llamar a otras funciones o realizar otras operaciones que dependan de erreserbaKop
-      },
-      error => {
-        console.error('Error:', error);
-      }
-    );
-    
-    console.log('http://localhost:8000/api/getPertsonaKopMaxGela/' + this.selectedGela);
-    this.http.get<any[]>('http://localhost:8000/api/getPertsonaKopMaxGela/' + this.selectedGela).subscribe(
-      (response: any[]) => {
-        // Coloca aquí el código que depende de la variable pertsonaKopMax
-        const pertsonaKopMax = response; // Asignar la respuesta a la variable pertsonaKopMax
+  
+    const erreserbaKop$ = this.http.get<number>('http://localhost:8000/api/GetPertsonaErreserbatutaGelaEgunOrdu/' + this.selectedGela + '/' + data + '/' + this.selectedOrdua);
+    const pertsonaErreserbKop$ = this.http.get<number>('http://localhost:8000/api/GetGimnasioErreserbakUsuarioEguneko/' + this.userId + '/' + data);
+    const pertsonaErreserbaKopTotala$ = this.http.get<number>('http://localhost:8000/api/GetGimnasioErreserbakUsuario/' + this.userId);
+    const pertsonaKopMax$ = this.http.get<number>('http://localhost:8000/api/getPertsonaKopMaxGela/' + this.selectedGela);
+  
+    forkJoin([erreserbaKop$, pertsonaErreserbKop$, pertsonaErreserbaKopTotala$, pertsonaKopMax$]).subscribe(
+      ([erreserbaKop, pertsonaErreserbKop, pertsonaErreserbaKopTotala, pertsonaKopMax]) => {
+        console.log('Erreserba kop: ', erreserbaKop);
+        console.log('Erreserba kop egunean pertsona: ', pertsonaErreserbKop);
+        console.log('Erreserba kop totala pertsona: ', pertsonaErreserbaKopTotala);
         console.log('Pertsona kopuru max: ', pertsonaKopMax);
-    
-        console.log('Erreserba kop: ', this.erreserbaKop)
-        console.log('Pertsona kopuru max: ', pertsonaKopMax)    
-    
-        if (this.erreserbaKop !== undefined && pertsonaKopMax !== undefined && this.erreserbaKop >= pertsonaKopMax) {
+  
+        // Realizar las comprobaciones después de recibir todas las respuestas
+        if (erreserbaKop >= pertsonaKopMax) {
           this.presentAlertErreserbaTopea();
-          return;
+        } else if (pertsonaErreserbKop >= 2) {
+          this.presentAlertErreserbaTopeaEguneko();
+        } else if (pertsonaErreserbaKopTotala >= 7) {
+          this.presentAlertErreserbaTopeaTotala();
+        } else {
+          const formData = {
+            user_id: this.userId,
+            gela_id: gela,
+            gym_erreserba_eguna: data,
+            gym_erreserba_ordua: this.selectedOrdua
+          };
+  
+          this.http.post('http://localhost:8000/api/GimnasioErreserbak', formData).subscribe(
+            async response => {
+              console.log('Registro exitoso:', response);
+              await this.presentAlert(data, this.selectedOrdua);
+            },
+            error => {
+              console.error('Error al registrar:', error);
+              // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
+            }
+          );
         }
-    
-        console.log(this.userId)
-        const formData = {
-          user_id: this.userId,
-          gela_id: gela,
-          gym_erreserba_eguna: data,
-          gym_erreserba_ordua: this.selectedOrdua
-      };
-    
-      console.log(formData)
-    
-      this.http.post('http://localhost:8000/api/GimnasioErreserbak', formData)
-        .subscribe(async response => {
-          console.log('Registro exitoso:', response);
-          await this.presentAlert(data,this.selectedOrdua);
-        }, error => {
-          console.error('Error al registrar:', error);
-          // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
-        });
       },
       error => {
         console.error('Error:', error);
       }
     );
-    
-   
   }
 
 
@@ -191,5 +182,25 @@ presentAlertErreserbaTopea() {
   }).then(alert => alert.present());
 }
 
+presentAlertErreserbaTopeaEguneko() {
+  this.alertController.create({
+    header: 'Eguneko gimnasio 2 orduko erreserba topera heldu zara.',
+    buttons: [
+      {
+        text: 'Vale',
+      }
+    ]
+  }).then(alert => alert.present());
+}
 
+presentAlertErreserbaTopeaTotala() {
+  this.alertController.create({
+    header: '7 gimnasio orduko erreserba topere heldu zara.',
+    buttons: [
+      {
+        text: 'Vale',
+      }
+    ]
+  }).then(alert => alert.present());
+}
 }

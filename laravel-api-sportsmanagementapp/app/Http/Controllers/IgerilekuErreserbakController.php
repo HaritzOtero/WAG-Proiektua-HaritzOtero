@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\IgeilekuErreserba; 
 use Illuminate\Http\Request;
 use App\Models\IgerilekuErreserba;
+use Carbon\Carbon;
 
 class IgerilekuErreserbakController extends Controller
 {
@@ -46,6 +47,14 @@ class IgerilekuErreserbakController extends Controller
     public function getIgerilekuErreserbakUsuarioEguneko($usuario_id,$eguna){
         $horasReservadas = IgerilekuErreserba::where('user_id', $usuario_id)->where('igerileku_erreserba_eguna', $eguna)->count();
         return response()->json($horasReservadas,201);       
+    }
+    public function ezabatuZaharrak(){
+        // Obtener la fecha de hoy formateada
+        $hoy = Carbon::today()->toDateString();
+        
+        // Eliminar los registros anteriores a la fecha de hoy
+        IgerilekuErreserba::whereDate('igerileku_erreserba_eguna', '<', $hoy)
+            ->delete();
     }
     public function store(Request $request)
     {

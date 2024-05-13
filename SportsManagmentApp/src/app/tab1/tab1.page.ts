@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
@@ -8,12 +8,32 @@ import { AlertController } from '@ionic/angular';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit{
   constructor(
     private router: Router,
     private http: HttpClient,
     private alertController: AlertController
   ) {}
+  
+  ngOnInit() {
+    this.http.delete<any[]>('http://localhost:8000/api/GimnasioErreserbaZaharrakEzabatu').subscribe(
+      (response: any[]) => {
+        console.log('Igerileku erreserba zaharrak ezabatuta');
+      },
+      error => {
+        console.error('Errorea igerileku erreserba zaharrak ezabatzerakoan:', error);
+      }
+    );
+
+    this.http.delete<any[]>('http://localhost:8000/api/IgerrilekuErreserbaZaharrakEzabatu').subscribe(
+      (response: any[]) => {
+        console.log('Gimnasio erreserba zaharrak ezabatuta');
+      },
+      error => {
+        console.error('Errorea gimnasio erreserba zaharrak ezabatzerakoan:', error);
+      }
+    );
+  }
 
   registerClicked() {
     this.router.navigate(['/tabs/tab3']);

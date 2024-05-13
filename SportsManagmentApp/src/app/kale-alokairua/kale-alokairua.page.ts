@@ -188,7 +188,7 @@ export class KaleAlokairuaPage implements OnInit {
 }
 presentAlertErreserbaTopeaEguneko() {
   this.alertController.create({
-    header: 'Eguneko gimnasio 2 orduko erreserba topera heldu zara.',
+    header: 'Eguneko igerieku 2 orduko erreserba topera heldu zara.',
     buttons: [
       {
         text: 'Vale',
