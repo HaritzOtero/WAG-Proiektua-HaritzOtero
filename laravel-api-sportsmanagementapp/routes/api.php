@@ -25,6 +25,8 @@ Route::get('/IgerilekuErreserbak', [IgerilekuErreserbakController::class, 'index
 Route::post('/IgerilekuErreserbak', [IgerilekuErreserbakController::class, 'store']);
 Route::get('/IgerilekuErreserbak/{IgerilekuErreserba}', [IgerilekuErreserbakController::class, 'show']);
 Route::get('/GetLibreOrduak/{kalea_id}/{eguna}', [IgerilekuErreserbakController::class, 'getOrduakKaleakin']);
+Route::get('/GetIgerilekuErreserbakUsuario/{usuario_id}', [IgerilekuErreserbakController::class, 'getIgerilekuErreserbakUsuario']);
+Route::get('/GetIgerilekuErreserbakUsuarioEguneko/{usuario_id}/{eguna}', [IgerilekuErreserbakController::class, 'getIgerilekuErreserbakUsuarioEguneko']);
 Route::put('/IgerilekuErreserbak/{IgerilekuErreserba}', [IgerilekuErreserbakController::class, 'update']);
 Route::delete('/IgerilekuErreserbak/{IgerilekuErreserba}', [IgerilekuErreserbakController::class, 'delete']);
 

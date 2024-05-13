@@ -39,7 +39,14 @@ class IgerilekuErreserbakController extends Controller
         return response()->json($horasDelDia, 200);
     }
     
-    
+    public function getIgerilekuErreserbakUsuario($usuario_id){
+        $igerilekuErreserbaTotala = IgerilekuErreserba::where('user_id', $usuario_id)->count();
+        return $igerilekuErreserbaTotala;                       
+    }
+    public function getIgerilekuErreserbakUsuarioEguneko($usuario_id,$eguna){
+        $horasReservadas = IgerilekuErreserba::where('user_id', $usuario_id)->where('igerileku_erreserba_eguna', $eguna)->count();
+        return response()->json($horasReservadas,201);       
+    }
     public function store(Request $request)
     {
         $igerilekuErreserba = IgerilekuErreserba::create($request->all());

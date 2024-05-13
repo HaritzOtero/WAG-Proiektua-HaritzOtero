@@ -8,6 +8,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./kale-alokairua.page.scss'],
 })
 export class KaleAlokairuaPage implements OnInit {
+  pertsonaErreserbKop:any;
+  pertsonaErreserbaKopTotala:any;
   kaleakList:any;  
   userId: any; // Variable para almacenar el userId
   selectedKalea: any;
@@ -99,7 +101,7 @@ export class KaleAlokairuaPage implements OnInit {
     const buttonText = clickedButton.innerText;
     this.selectedOrdua = buttonText;
   }
-   alokatu() {
+  alokatu() {
     const data = (document.querySelector('.eguna') as HTMLInputElement).value;
     const kalea = (document.querySelector('.select') as HTMLInputElement).value;
     console.log(this.userId)
@@ -108,18 +110,50 @@ export class KaleAlokairuaPage implements OnInit {
       kalea_id: kalea,
       igerileku_erreserba_eguna: data,
       igeileku_erreserba_ordua: this.selectedOrdua
-  };
-
-  console.log(formData)
-
-  this.http.post('http://localhost:8000/api/IgerilekuErreserbak', formData)
-    .subscribe(async response => {
-      console.log('Registro exitoso:', response);
-      await this.presentAlert(data,this.selectedOrdua);
-    }, error => {
-      console.error('Error al registrar:', error);
-      // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
-    });
+    };
+  
+    this.http.get<any[]>('http://localhost:8000/api/GetIgerilekuErreserbakUsuarioEguneko/' + this.userId + '/' + data).subscribe(
+      (response: any[]) => {
+        this.pertsonaErreserbKop = response; // Asignar la respuesta a la variable erreserbaKop
+        console.log('Erreserba kop egunean pertsona: ', this.pertsonaErreserbKop);
+  
+        // Realizar la segunda solicitud HTTP dentro de la suscripción de la primera
+        this.http.get<any[]>('http://localhost:8000/api/GetIgerilekuErreserbakUsuario/' + this.userId).subscribe(
+          (response: any[]) => {
+            this.pertsonaErreserbaKopTotala = response; // Asignar la respuesta a la variable erreserbaKop
+            console.log('Erreserba kop totala pertsona: ', this.pertsonaErreserbaKopTotala);
+            if (this.pertsonaErreserbKop !== undefined && this.pertsonaErreserbKop >= 2) {
+              this.presentAlertErreserbaTopeaEguneko();
+              return;
+            } else if (this.pertsonaErreserbaKopTotala !== undefined &&  this.pertsonaErreserbaKopTotala >= 7) {
+              this.presentAlertErreserbaTopeaTotala();
+              return;
+            } else {
+              this.registrar(formData, data, this.selectedOrdua);
+            }
+          },
+          error => {
+            console.error('Error:', error);
+          }
+        );
+      },
+      error => {
+        console.error('Error:', error);
+      }
+    );
+  }
+  
+  registrar(formData: any, data: string, selectedOrdua: string) {
+    this.http.post('http://localhost:8000/api/IgerilekuErreserbak', formData).subscribe(
+      async response => {
+        console.log('Registro exitoso:', response);
+        await this.presentAlert(data, selectedOrdua);
+      },
+      error => {
+        console.error('Error al registrar:', error);
+        // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
+      }
+    );
   }
   getKalearenOrduak() {
     const formattedDate = new Date(this.selectedDate).toISOString().split('T')[0];
@@ -151,6 +185,27 @@ export class KaleAlokairuaPage implements OnInit {
     });
 
     await alert.present();
+}
+presentAlertErreserbaTopeaEguneko() {
+  this.alertController.create({
+    header: 'Eguneko gimnasio 2 orduko erreserba topera heldu zara.',
+    buttons: [
+      {
+        text: 'Vale',
+      }
+    ]
+  }).then(alert => alert.present());
+}
+
+presentAlertErreserbaTopeaTotala() {
+  this.alertController.create({
+    header: '7 gimnasio orduko erreserba topere heldu zara.',
+    buttons: [
+      {
+        text: 'Vale',
+      }
+    ]
+  }).then(alert => alert.present());
 }
 
 
