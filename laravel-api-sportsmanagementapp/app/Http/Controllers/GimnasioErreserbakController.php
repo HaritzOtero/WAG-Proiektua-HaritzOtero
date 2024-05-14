@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\GimnasioErreserbak;
 use App\Models\Gela;
 use Carbon\Carbon;
+
 class GimnasioErreserbakController extends Controller
 {
     public function index()
@@ -17,8 +18,9 @@ class GimnasioErreserbakController extends Controller
     {
         $gimnasioErreserba = GimnasioErreserbak::create($request->all());
 
-        return  response()->json($gimnasioErreserba,201);
+        return  response()->json($gimnasioErreserba, 201);
     }
+
     public function getOrduakGelakin($gela_id, $eguna) {
         // Obtener las horas reservadas para la calle específica ($kalea) en un día específico ($eguna)
         $horasReservadas = GimnasioErreserbak::where('gela_id', $gela_id)
@@ -46,6 +48,7 @@ class GimnasioErreserbakController extends Controller
         // Retornar el array de horas disponibles
         return response()->json($horasDelDia, 200);
     }
+
     public function getPertsonaKopuruErreserbatuta($gela_id, $eguna, $ordua){
         // Contar el número de reservas para la gela específica ($gela_id), en el día específico ($eguna) y a la hora específica ($ordua)
         $reservasCount = GimnasioErreserbak::where('gela_id', $gela_id)
@@ -56,10 +59,24 @@ class GimnasioErreserbakController extends Controller
         // Retornar el número de reservas encontradas
         return $reservasCount;
     }
+
     public function getGimnasioErreserbakUsuario($usuario_id){
         $gimnasioErreserbaTotala = GimnasioErreserbak::where('user_id', $usuario_id)->count();
         return $gimnasioErreserbaTotala;                       
     }
+
+    public function getNireGimnasioErreserbakUsuario($usuario_id)
+    {
+        // Obtener las reservas del gimnasio para el usuario
+        $gimnasioErreserbaTotala = GimnasioErreserbak::where('user_id', $usuario_id)->get();
+
+        // Cargar la información relacionada de la gela para cada reserva
+        $gimnasioErreserbaTotala->load('gela');
+
+        // Retornar la respuesta JSON
+        return response()->json($gimnasioErreserbaTotala, 201);
+    }
+
     public function ezabatuZaharrakGym(){
         // Obtener la fecha de hoy formateada
         $hoy = Carbon::today()->toDateString();
@@ -68,22 +85,35 @@ class GimnasioErreserbakController extends Controller
         GimnasioErreserbak::whereDate('gym_erreserba_eguna', '<', $hoy)
             ->delete();
     }
+
     public function getGimnasioErreserbakUsuarioEguneko($usuario_id,$eguna){
-        $horasReservadas = GimnasioErreserbak::where('user_id', $usuario_id)->where('gym_erreserba_eguna', $eguna)->count();
-        return response()->json($horasReservadas,201);       
+        $horasReservadas = GimnasioErreserbak::where('user_id', $usuario_id)
+                                              ->where('gym_erreserba_eguna', $eguna)
+                                              ->count();
+        return response()->json($horasReservadas, 201);       
     }
+
     public function show(GimnasioErreserbak $gimnasioErreserba)
     {
         return $gimnasioErreserba;
     }
+
     public function update(Request $request, GimnasioErreserbak $gimnasioErreserba)
     {
         $gimnasioErreserba->update($request->all());
-        return response()->json($gimnasioErreserba,200);
+        return response()->json($gimnasioErreserba, 200);
     }
-    public function delete(Request $request, GimnasioErreserbak $gimnasioErreserba)
-{
-    $gimnasioErreserba->delete(); // Eliminar la Galdera
-    return response()->json(null, 204); // Retornar una respuesta con código 204 (No Content)
-}
+
+    public function delete($id)
+    {
+        $gimnasioErreserba = GimnasioErreserbak::find($id);
+
+        if (!$gimnasioErreserba) {
+            return response()->json(['error' => 'La reserva no existe'], 404);
+        }
+
+        $gimnasioErreserba->delete();
+
+        return response()->json(null, 204);
+    }
 }

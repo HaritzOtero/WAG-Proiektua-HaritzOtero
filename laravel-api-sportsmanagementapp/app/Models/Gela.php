@@ -13,4 +13,6 @@ class Gela extends Model
         'gela_izena',
         'pertsona_kopMax'
     ];
+
+    protected $table = 'gelas';
 }

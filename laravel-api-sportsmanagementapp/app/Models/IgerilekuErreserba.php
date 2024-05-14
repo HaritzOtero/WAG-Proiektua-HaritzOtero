@@ -15,4 +15,12 @@ class IgerilekuErreserba extends Model
         'igerileku_erreserba_eguna',
         'igeileku_erreserba_ordua'
     ];
+
+    protected $table = 'igerileku_erreserbas';
+
+    // Definir la relación con Gela
+    public function kalea()
+    {
+        return $this->belongsTo(Kalea::class, 'kalea_id');
+    }
 }

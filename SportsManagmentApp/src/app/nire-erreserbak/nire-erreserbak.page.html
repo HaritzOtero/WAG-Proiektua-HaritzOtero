@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>NIRE ERRESERBAK</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="formularioa">
+    <h2>IGERILEKU ERRESERBAK:</h2>
+    <!-- Iterar sobre la lista de kaleak -->
+    <ion-list>
+      <ion-item *ngFor="let igerilekuErreserba of igeriekuErreserbakList">
+        <!-- Mostrar el nombre de la kalea -->
+        <ion-label>Kalea: {{ igerilekuErreserba.kalea.kalea_izena }}  Eguna: {{ igerilekuErreserba.igerileku_erreserba_eguna }} Ordua: {{ igerilekuErreserba.igeileku_erreserba_ordua }}</ion-label>
+        <!-- Botones de eliminar y editar -->
+        <ion-button shape="round" (click)="presentAlert(igerilekuErreserba)" class="eliminar-button">
+          EZ NAIZ JUNGO
+        </ion-button>
+      </ion-item>
+    </ion-list>
+    <ion-button shape="round" (click)="gimnasioErreserbakClicked()" class="back-button">NIRE GYM ERRESERBAK</ion-button>
+    <ion-button shape="round" (click)="backClicked()" class="back-button">
+      <img slot="start" src="../../assets/img/Undo.png">
+    </ion-button>
+  </div>
+</ion-content>

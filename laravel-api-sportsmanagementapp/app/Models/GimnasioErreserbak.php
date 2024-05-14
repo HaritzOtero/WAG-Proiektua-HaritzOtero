@@ -15,4 +15,12 @@ class GimnasioErreserbak extends Model
         'gym_erreserba_ordua',
         'gym_erreserba_eguna'
     ];
+
+    protected $table = 'gimnasio_erreserbaks';
+
+    // Definir la relación con Gela
+    public function gela()
+    {
+        return $this->belongsTo(Gela::class, 'gela_id');
+    }
 }

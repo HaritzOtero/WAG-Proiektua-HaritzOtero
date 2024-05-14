@@ -12,4 +12,6 @@ class Kalea extends Model
     protected $fillable = [
         'kalea_izena',
     ];
+
+    protected $table = 'kaleas';
 }

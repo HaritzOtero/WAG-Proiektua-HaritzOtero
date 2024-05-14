@@ -61,6 +61,15 @@ const routes: Routes = [
         path: 'kaleaGehitu',
         loadChildren: () => import('../kalea-gehitu/kalea-gehitu.module').then(m => m.KaleaGehituPageModule)
       },
+
+      {
+        path: 'nireErreserbak',
+        loadChildren: () => import('../nire-erreserbak/nire-erreserbak.module').then(m => m.NireErreserbakPageModule)
+      },
+      {
+        path: 'nireGymErreserbak',
+        loadChildren: () => import('../nire-erreserbak-gym/nire-erreserbak-gym.module').then(m => m.NireErreserbakGymPageModule)
+      },
       {
         path: '',
         redirectTo: '/tabs/tab1',

@@ -39,7 +39,14 @@ class IgerilekuErreserbakController extends Controller
         // Retornar el array de horas disponibles
         return response()->json($horasDelDia, 200);
     }
-    
+    public function getNireIgerilekuErreserbakUsuario($usuario_id){
+        
+        $igerilekuErreserbaTotala = IgerilekuErreserba::where('user_id', $usuario_id)->get();
+        
+        $igerilekuErreserbaTotala->load('kalea');
+        
+        return response()->json($igerilekuErreserbaTotala,201);       
+    }
     public function getIgerilekuErreserbakUsuario($usuario_id){
         $igerilekuErreserbaTotala = IgerilekuErreserba::where('user_id', $usuario_id)->count();
         return $igerilekuErreserbaTotala;                       
@@ -72,9 +79,16 @@ class IgerilekuErreserbakController extends Controller
         $igerilekuErreserba->update($request->all());
         return response()->json($igerilekuErreserba,200);
     }
-    public function delete(Request $request, IgerilekuErreserba $igerilekuErreserba)
+    public function delete($id)
 {
-    $igerilekuErreserba->delete(); // Eliminar la Galdera
-    return response()->json(null, 204); // Retornar una respuesta con código 204 (No Content)
+    $ogerilekuErreserba = IgerilekuErreserba::find($id);
+
+    if (!$ogerilekuErreserba) {
+        return response()->json(['error' => 'La reserva no existe'], 404);
+    }
+
+    $ogerilekuErreserba->delete();
+
+    return response()->json(null, 204);
 }
 }

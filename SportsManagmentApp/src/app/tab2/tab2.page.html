@@ -19,7 +19,10 @@
         <img src="../../assets/img/gym-with-indoor-cycling-equipment.jpg" class="sombraImg">
       </div>
       <ion-button *ngIf="isAdmin" shape="round" (click)="gimnasioGestioaClicked()" class="custom-button">GIMNASIO GESTIOA</ion-button>
-      <ion-button *ngIf="!isAdmin" shape="round" (click)="gimnasioaClicked()" class="custom-button">GIMNASIO ERRESERBA</ion-button>
+      <div class="botones-usuario">
+        <ion-button *ngIf="!isAdmin" shape="round" (click)="gimnasioaClicked()" class="custom-button">GIMNASIO ERRESERBA</ion-button>
+        <ion-button *ngIf="!isAdmin" shape="round" (click)="nireErreserbak()" class="custom-button">NIRE ERRESERBAK</ion-button>
+      </div>
     </div>
     <ion-button shape="round" (click)="backClicked()" class="back-button">
       <img slot="start" src="../../assets/img/Undo.png">

@@ -17,6 +17,14 @@ const routes: Routes = [
     path: 'kalea-gehitu',
     loadChildren: () => import('./kalea-gehitu/kalea-gehitu.module').then( m => m.KaleaGehituPageModule)
   },
+  {
+    path: 'nire-erreserbak',
+    loadChildren: () => import('./nire-erreserbak/nire-erreserbak.module').then( m => m.NireErreserbakPageModule)
+  },
+  {
+    path: 'nire-erreserbak-gym',
+    loadChildren: () => import('./nire-erreserbak-gym/nire-erreserbak-gym.module').then( m => m.NireErreserbakGymPageModule)
+  },
 
 
 

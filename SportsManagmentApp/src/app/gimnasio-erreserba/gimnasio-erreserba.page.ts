@@ -161,8 +161,12 @@ export class GimnasioErreserbaPage implements OnInit {
         {
           text: 'Vale',
           handler: () => {
-            this.router.navigateByUrl('/tabs/tab1');
+            this.router.navigate(['/tabs/tab2'], { state: { userId: this.userId } });
           }
+        },
+        {
+          text: 'Vale',
+          role:'cancel'
         }
       ]
     });

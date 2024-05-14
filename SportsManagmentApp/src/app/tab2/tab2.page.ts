@@ -69,7 +69,9 @@ export class Tab2Page implements OnInit {
   gimnasioaClicked() {
     this.router.navigate(['/tabs/gimnasioErreserba'], { state: { userId: this.userId } });
   }
-
+  nireErreserbak() {
+    this.router.navigate(['/tabs/nireErreserbak'], { state: { userId: this.userId } });
+  }
   backClicked() {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
