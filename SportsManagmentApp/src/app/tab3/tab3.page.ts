@@ -24,30 +24,22 @@ export class Tab3Page {
     this.router.navigate(['/tabs/tab1']);
   }
 
-  async register() {
+  register() {
     const gmail = (document.querySelector('.email') as HTMLInputElement).value;
     const izena = (document.querySelector('.izena') as HTMLInputElement).value;
     const abizena = (document.querySelector('.abizena') as HTMLInputElement).value;
     const password = (document.querySelector('.pasahitza') as HTMLInputElement).value;
     const passwordConfirm = (document.querySelector('.pasahitzaErrep') as HTMLInputElement).value;
-
-
+  
+    // Verificar si las contraseñas coinciden
     if (password !== passwordConfirm) {
-        console.log(password);
-        console.log(passwordConfirm);
-        this.presentErrorAlert('Las contraseñas no coinciden.');
-        //return; // Sale de la función sin continuar con el registro
+      console.log(password);
+      console.log(passwordConfirm);
+      this.presentErrorAlert('Las contraseñas no coinciden.');
+      return; // Sale de la función sin continuar con el registro
     }
-
-    let type: string;
-
-    if (gmail === 'admin@sportscenter.com') {
-        type = 'Admin';
-    } else {
-        type = 'Usuario';
-    }
-
-    // Dentro de tu método
+  
+    // Verificar si el correo electrónico es válido
     if (!gmail) {
       this.presentErrorAlert('Gmaila beharrezkoa da.');
       return;
@@ -55,37 +47,79 @@ export class Tab3Page {
       this.presentErrorAlert('Gmailaren formatua okerra da.');
       return;
     }
-
+  
+    // Realizar la solicitud HTTP para verificar si existe un usuario con el mismo correo electrónico
     this.http.get<any>('http://localhost:8000/api/usuarioasGetByGmail/' + gmail).subscribe(
-      async (response: any) => {
+      (response: any) => {
+        // Si se encuentra un usuario con el mismo correo electrónico, muestra la alerta y devuelve
         if (response) {
-          // Si se encuentra un usuario con el mismo correo electrónico, muestra la alerta y devuelve
-          await this.presentErrorAlert('Ya existe un usuario con ese gmail');
+          this.presentErrorAlert('Ya existe un usuario con ese gmail');
           return;
-        } 
+        }
+  
+        // Si no hay ningún usuario con el mismo correo electrónico, procede con el registro
+        let type: string;
+        if (gmail === 'admin@sportscenter.com') {
+          type = 'Admin';
+        } else {
+          type = 'Usuario';
+        }
+  
+        const formData = {
+          gmail: gmail,
+          izena: izena,
+          abizena: abizena,
+          password: password,
+          type: type
+        };
+  
+        // Realizar la solicitud HTTP para registrar al usuario
+        this.http.post('http://localhost:8000/api/usuarioas/', formData).subscribe(
+          (registerResponse: any) => {
+            console.log('Registro exitoso:', registerResponse);
+            this.presentAlert(formData.izena); // Mostrar la alerta de registro exitoso
+          },
+          error => {
+            console.error('Error al registrar:', error);
+            // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
+          }
+        );
       },
-      async error => {
-        console.log(error);
+      error => {
+        console.error('Error al verificar el correo electrónico:', error);
+        // Si hay un error al verificar el correo electrónico, simplemente continuar con el registro
+        let type: string;
+        if (gmail === 'admin@sportscenter.com') {
+          type = 'Admin';
+        } else {
+          type = 'Usuario';
+        }
+  
+        const formData = {
+          gmail: gmail,
+          izena: izena,
+          abizena: abizena,
+          password: password,
+          type: type
+        };
+  
+        // Realizar la solicitud HTTP para registrar al usuario
+        this.http.post('http://localhost:8000/api/usuarioas/', formData).subscribe(
+          (registerResponse: any) => {
+            console.log('Registro exitoso:', registerResponse);
+            this.presentAlert(formData.izena); // Mostrar la alerta de registro exitoso
+          },
+          error => {
+            console.error('Error al registrar:', error);
+            // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
+          }
+        );
       }
     );
-
-    const formData = {
-      gmail: gmail,
-      izena: izena,
-      abizena: abizena,
-      password: password,
-      type: type
-  };
-
-  this.http.post('http://localhost:8000/api/usuarioas', formData)
-    .subscribe(async response => {
-      console.log('Registro exitoso:', response);
-      await this.presentAlert(formData.izena);
-    }, error => {
-      console.error('Error al registrar:', error);
-      // Manejar cualquier error aquí, como mostrar un mensaje de error al usuario
-    });
-}
+  }
+  
+  
+  
 
 async presentErrorAlert(message: string) {
     const alert = await this.alertController.create({

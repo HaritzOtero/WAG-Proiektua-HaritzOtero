@@ -24,7 +24,7 @@ class UsuarioaController extends Controller
     }
     public function showByGmail($gmail)
     {
-        try {
+       
             // Buscar el usuario por su dirección de correo electrónico (gmail)
             $usuarioa = Usuarioa::where('gmail', $gmail)->first();
 
@@ -35,10 +35,6 @@ class UsuarioaController extends Controller
 
             // Devolver el usuario encontrado
             return response()->json($usuarioa, 200);
-        } catch (\Exception $e) {
-            // Manejar cualquier excepción que ocurra durante la búsqueda del usuario
-            return response()->json(['message' => 'Error al buscar el usuario'], 500);
-        }
     }
     public function getPasswordByGmail($gmail)
     {
