@@ -25,12 +25,12 @@ export class Tab3Page {
   }
 
   register() {
-    const gmail = (document.querySelector('.email') as HTMLInputElement).value;
-    const izena = (document.querySelector('.izena') as HTMLInputElement).value;
-    const abizena = (document.querySelector('.abizena') as HTMLInputElement).value;
-    const password = (document.querySelector('.pasahitza') as HTMLInputElement).value;
-    const passwordConfirm = (document.querySelector('.pasahitzaErrep') as HTMLInputElement).value;
-  
+    var gmail = (document.querySelector('.email') as HTMLInputElement).value.trim();
+    var izena = (document.querySelector('.izena') as HTMLInputElement).value.trim();
+    var abizena = (document.querySelector('.abizena') as HTMLInputElement).value.trim();
+    var password = (document.querySelector('.pasahitza') as HTMLInputElement).value.trim();
+    var passwordConfirm = (document.querySelector('.pasahitzaErrep') as HTMLInputElement).value.trim();
+    
     // Verificar si las contraseñas coinciden
     if (password !== passwordConfirm) {
       console.log(password);

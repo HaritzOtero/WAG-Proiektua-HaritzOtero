@@ -40,8 +40,8 @@ export class Tab1Page implements OnInit{
   }
 
   async loginClicked() {
-    const gmail = (document.querySelector('.email') as HTMLInputElement).value;
-    const password = (document.querySelector('.pasahitza') as HTMLInputElement).value;
+    const gmail = (document.querySelector('.email') as HTMLInputElement).value.trim();
+    const password = (document.querySelector('.pasahitza') as HTMLInputElement).value.trim();
 
     this.http.get<any>('http://localhost:8000/api/usuarioasGetByGmail/' + gmail).subscribe(
       async (response: any) => {
