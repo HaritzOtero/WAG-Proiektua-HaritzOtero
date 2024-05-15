@@ -22,8 +22,6 @@ export class KaleAlokairuaPage implements OnInit {
     private http: HttpClient,
     private alertController: AlertController
   ) {
-    const today = new Date();
-    this.minDate = today.toISOString().split('T')[0]
   }
 
   pickerOptions: any = {
@@ -36,6 +34,8 @@ export class KaleAlokairuaPage implements OnInit {
       console.log(this.userId);
       this.getKaleenIzenak();
     }
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
   }
   ionViewDidEnter() {
     const state = this.router.getCurrentNavigation()?.extras.state;
@@ -43,6 +43,8 @@ export class KaleAlokairuaPage implements OnInit {
       this.userId = state['userId'];
       console.log(this.userId);
     }
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
     this.getKaleenIzenak();
   }
   backClicked() {
@@ -176,7 +178,7 @@ export class KaleAlokairuaPage implements OnInit {
       message: 'Zure erreserba: Eguna: ' + data + ', ordua: ' + selectedOrdua,
       buttons: [
         {
-          text: 'Vale',
+          text: 'Bale',
           handler: () => {
             this.router.navigate(['/tabs/tab2'], { state: { userId: this.userId } });
           }
@@ -191,7 +193,7 @@ presentAlertErreserbaTopeaEguneko() {
     header: 'Eguneko igerieku 2 orduko erreserba topera heldu zara.',
     buttons: [
       {
-        text: 'Vale',
+        text: 'Bale',
       }
     ]
   }).then(alert => alert.present());
@@ -202,7 +204,7 @@ presentAlertErreserbaTopeaTotala() {
     header: '7 gimnasio orduko erreserba topere heldu zara.',
     buttons: [
       {
-        text: 'Vale',
+        text: 'Bale',
       }
     ]
   }).then(alert => alert.present());

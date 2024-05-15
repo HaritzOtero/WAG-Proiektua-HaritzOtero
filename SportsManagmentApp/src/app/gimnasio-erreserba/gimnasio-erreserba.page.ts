@@ -18,17 +18,15 @@ export class GimnasioErreserbaPage implements OnInit {
   selectedGela: any;
   selectedDate:any;
   selectedOrdua:any;
-  orduakList: string[] = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00','14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
   minDate: any;
+  orduakList: string[] = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00','14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
   constructor(
     private router: Router,
     private http: HttpClient,
     private alertController: AlertController
   ) {
-    const today = new Date();
-    this.minDate = today.toISOString().split('T')[0]
+    
   }
-
   pickerOptions: any = {
     cssClass: 'datepicker-class'
   };
@@ -39,6 +37,8 @@ export class GimnasioErreserbaPage implements OnInit {
       console.log(this.userId);
       this.getKaleenIzenak();
     }
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
   }
   ionViewDidEnter() {
     const state = this.router.getCurrentNavigation()?.extras.state;
@@ -46,7 +46,8 @@ export class GimnasioErreserbaPage implements OnInit {
       this.userId = state['userId'];
       console.log(this.userId);
     }
-    this.getKaleenIzenak();
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
   }
   backClicked() {
     this.router.navigate(['/tabs/tab2']);
@@ -164,10 +165,6 @@ export class GimnasioErreserbaPage implements OnInit {
             this.router.navigate(['/tabs/tab2'], { state: { userId: this.userId } });
           }
         },
-        {
-          text: 'Vale',
-          role:'cancel'
-        }
       ]
     });
 

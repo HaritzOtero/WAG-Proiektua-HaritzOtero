@@ -10,7 +10,7 @@
       <!-- Input de tipo date con datepicker -->
       <div class="input-container">
         <ion-label>Aukeratu eguna:</ion-label>
-        <input class="eguna" type="date" [(ngModel)]="selectedDate" (change)="checkSelections()">
+        <input class="eguna" type="date" [(ngModel)]="selectedDate" (change)="checkSelections()" min="{{minDate}}">
 
       </div>
       <!-- Select con opciones generadas dinámicamente desde kaleakList -->
