@@ -25,7 +25,6 @@ export class EditKaleaPage implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
     });
-    console.log(this.userId);
     
 
     const state = this.router.getCurrentNavigation()?.extras.state;
@@ -42,7 +41,6 @@ export class EditKaleaPage implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
     });
-    console.log(this.userId);
     
 
     const state = this.router.getCurrentNavigation()?.extras.state;

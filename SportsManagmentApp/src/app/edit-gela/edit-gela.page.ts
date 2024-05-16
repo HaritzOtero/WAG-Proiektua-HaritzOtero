@@ -25,7 +25,6 @@ export class EditGelaPage implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
     });
-    console.log(this.userId);
     
 
     const state = this.router.getCurrentNavigation()?.extras.state;
@@ -42,9 +41,7 @@ export class EditGelaPage implements OnInit {
     // Obtener el userId de los parámetros de la ruta
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
-    });
-    console.log(this.userId);
-    
+    });    
 
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['gela']) {
@@ -59,7 +56,6 @@ export class EditGelaPage implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
     });
-    console.log(this.userId);
     
 
     const state = this.router.getCurrentNavigation()?.extras.state;
