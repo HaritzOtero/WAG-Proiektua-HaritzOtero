@@ -22,7 +22,6 @@ export class NireErreserbakGymPage implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
       this.getGimnasioErreserbakList();
     }
   }
@@ -31,7 +30,6 @@ export class NireErreserbakGymPage implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
     }
     this.getGimnasioErreserbakList();
   }
@@ -61,7 +59,6 @@ export class NireErreserbakGymPage implements OnInit {
           handler: () => {
             this.http.delete<any[]>('http://localhost:8000/api/GimnasioErreserbak/' + igerilekuErreserba.id).subscribe(
               (response: any[]) => {
-                console.log('Reserva eliminada:', igerilekuErreserba);
                 this.getGimnasioErreserbakList(); // Llama a la función para cargar las gelak nuevamente después de eliminar una
               },
               error => {

@@ -18,10 +18,8 @@ export class Tab1Page implements OnInit{
   ngOnInit() {
     this.http.delete<any[]>('http://localhost:8000/api/GimnasioErreserbaZaharrakEzabatu').subscribe(
       (response: any[]) => {
-        console.log('Igerileku erreserba zaharrak ezabatuta');
       },
       error => {
-        console.error('Errorea igerileku erreserba zaharrak ezabatzerakoan:', error);
       }
     );
 
@@ -49,7 +47,6 @@ export class Tab1Page implements OnInit{
           // Obtener el ID del usuario
           var userId = response.id;
           await this.presentAlert('Bienvenido', 'Hola ' + response.izena);
-          console.log(userId)
           // Navegar a TabsPage y pasar el userId como parámetro
           this.router.navigate(['/tabs/tab2'], { state: { userId: userId } });
         } else {

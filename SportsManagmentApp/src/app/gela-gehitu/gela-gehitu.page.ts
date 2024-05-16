@@ -25,8 +25,6 @@ export class GelaGehituPage implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
     });
-
-    console.log(this.userId);
     });
   }
   ionViewDidEnter(){
@@ -35,7 +33,6 @@ export class GelaGehituPage implements OnInit {
       this.userId = params.get('userId');
     });
 
-    console.log(this.userId);
   }
   
   ngOnInit() {
@@ -43,8 +40,6 @@ export class GelaGehituPage implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
     });
-
-    console.log(this.userId);
   }
 
   save() {

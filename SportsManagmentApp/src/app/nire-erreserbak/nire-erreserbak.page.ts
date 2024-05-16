@@ -23,7 +23,6 @@ export class NireErreserbakPage implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
       this.getIgerilekuErreserbakList();
     }
   }
@@ -31,7 +30,6 @@ export class NireErreserbakPage implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
     }
     this.getIgerilekuErreserbakList();
   }
@@ -53,7 +51,6 @@ export class NireErreserbakPage implements OnInit {
     this.router.navigate(['/tabs/tab2'], { state: { userId: this.userId } });
   }
   presentAlert(igerilekuErreserba:any) {
-    console.log(igerilekuErreserba.id)
     this.alertController.create({
       header: 'Seguro erreserba desegin nahi duzula?',
       buttons: [
@@ -62,7 +59,6 @@ export class NireErreserbakPage implements OnInit {
           handler: () => {
             this.http.delete<any[]>('http://localhost:8000/api/IgerilekuErreserbak/' + igerilekuErreserba.id).subscribe(
               (response: any[]) => {
-                console.log('Reserva eliminada:', igerilekuErreserba);
                 this.getIgerilekuErreserbakList(); // Llama a la función para cargar las gelak nuevamente después de eliminar una
               },
               error => {

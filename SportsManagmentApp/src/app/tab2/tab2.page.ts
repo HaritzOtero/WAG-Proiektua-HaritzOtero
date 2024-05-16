@@ -36,7 +36,6 @@ export class Tab2Page implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId)
     }
 
     this.http.get<any>('http://localhost:8000/api/usuarioas/' + this.userId).pipe(

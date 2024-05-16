@@ -19,13 +19,13 @@ export class GimnasioErreserbaPage implements OnInit {
   selectedDate:any;
   selectedOrdua:any;
   minDate: any;
-  orduakList: string[] = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00','14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+  orduakList: string[]; 
   constructor(
     private router: Router,
     private http: HttpClient,
     private alertController: AlertController
   ) {
-    
+    this.orduakList = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00','14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
   }
   pickerOptions: any = {
     cssClass: 'datepicker-class'
@@ -34,7 +34,6 @@ export class GimnasioErreserbaPage implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
       this.getKaleenIzenak();
     }
     const today = new Date();
@@ -44,19 +43,16 @@ export class GimnasioErreserbaPage implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
     }
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
   }
   backClicked() {
-    this.router.navigate(['/tabs/tab2']);
+    this.router.navigate(['/tabs/tab2'], { state: { userId: this.userId } });
   }
 // Función para verificar si tanto la fecha como el select están rellenados
   checkSelections() {
     if (this.selectedDate && this.selectedGela) {
-      console.log('Fecha seleccionada:', this.selectedDate);
-      console.log('Opción seleccionada:', this.selectedGela);
       this.loadButtons();
     }
   }
@@ -80,7 +76,7 @@ export class GimnasioErreserbaPage implements OnInit {
     }
     
     generatedButtonsContainer.innerHTML = "";
-    console.log(this.orduakList)
+
     this.orduakList.forEach((element: any) => {
     const button = document.createElement('ion-button');
     button.setAttribute('shape', 'round');
@@ -115,11 +111,6 @@ export class GimnasioErreserbaPage implements OnInit {
   
     forkJoin([erreserbaKop$, pertsonaErreserbKop$, pertsonaErreserbaKopTotala$, pertsonaKopMax$]).subscribe(
       ([erreserbaKop, pertsonaErreserbKop, pertsonaErreserbaKopTotala, pertsonaKopMax]) => {
-        console.log('Erreserba kop: ', erreserbaKop);
-        console.log('Erreserba kop egunean pertsona: ', pertsonaErreserbKop);
-        console.log('Erreserba kop totala pertsona: ', pertsonaErreserbaKopTotala);
-        console.log('Pertsona kopuru max: ', pertsonaKopMax);
-  
         // Realizar las comprobaciones después de recibir todas las respuestas
         if (erreserbaKop >= pertsonaKopMax) {
           this.presentAlertErreserbaTopea();
@@ -137,7 +128,6 @@ export class GimnasioErreserbaPage implements OnInit {
   
           this.http.post('http://localhost:8000/api/GimnasioErreserbak', formData).subscribe(
             async response => {
-              console.log('Registro exitoso:', response);
               await this.presentAlert(data, this.selectedOrdua);
             },
             error => {

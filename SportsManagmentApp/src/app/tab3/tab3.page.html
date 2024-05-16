@@ -14,25 +14,25 @@
     <div class="formularioa">
       <div class="input-container-register">
         <label>Email:</label>
-        <ion-input class="custom-input email"  required></ion-input>
+        <ion-input class="custom-input email" [(ngModel)]="gmail" required></ion-input>
     </div>
     
     
       <div class="input-container-register">
         <label>Izena:</label>
-        <ion-input class="custom-input izena" required></ion-input>
+        <ion-input class="custom-input izena" [(ngModel)]="izena" required></ion-input>
       </div>
       <div class="input-container-register">
         <label>Abizena:</label>
-        <ion-input class="custom-input abizena" required></ion-input>
+        <ion-input class="custom-input abizena" [(ngModel)]="abizena" required></ion-input>
       </div>
       <div class="input-container-register">
         <label>Pasahitza:</label>
-        <ion-input class="custom-input pasahitza" type="password" required></ion-input>
+        <ion-input class="custom-input pasahitza" type="password" [(ngModel)]="password"required></ion-input>
       </div>
       <div class="input-container-register">
         <label>Errepikatu:</label>
-        <ion-input class="custom-input pasahitzaErrep" type="password" required></ion-input>
+        <ion-input class="custom-input pasahitzaErrep" type="password" [(ngModel)]="passwordConfirm" required></ion-input>
       </div>
       <div>
         <ion-button shape="round" (click)="register()" class="custom-button">Register</ion-button>

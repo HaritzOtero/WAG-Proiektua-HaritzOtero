@@ -23,15 +23,10 @@ export class KaleAlokairuaPage implements OnInit {
     private alertController: AlertController
   ) {
   }
-
-  pickerOptions: any = {
-    cssClass: 'datepicker-class'
-  };
   ngOnInit() {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
       this.getKaleenIzenak();
     }
     const today = new Date();
@@ -41,20 +36,17 @@ export class KaleAlokairuaPage implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
     }
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
     this.getKaleenIzenak();
   }
   backClicked() {
-    this.router.navigate(['/tabs/tab2']);
+    this.router.navigate(['/tabs/tab2'], { state: { userId: this.userId } });
   }
 // Función para verificar si tanto la fecha como el select están rellenados
   checkSelections() {
     if (this.selectedDate && this.selectedKalea) {
-      console.log('Fecha seleccionada:', this.selectedDate);
-      console.log('Opción seleccionada:', this.selectedKalea);
       this.getKalearenOrduak();
       this.loadButtons();
     }
@@ -79,7 +71,6 @@ export class KaleAlokairuaPage implements OnInit {
     }
     
     generatedButtonsContainer.innerHTML = "";
-    console.log(this.orduakList)
     this.orduakList.forEach((element: any) => {
     const button = document.createElement('ion-button');
     button.setAttribute('shape', 'round');
@@ -106,7 +97,6 @@ export class KaleAlokairuaPage implements OnInit {
   alokatu() {
     const data = (document.querySelector('.eguna') as HTMLInputElement).value;
     const kalea = (document.querySelector('.select') as HTMLInputElement).value;
-    console.log(this.userId)
     const formData = {
       user_id: this.userId,
       kalea_id: kalea,
@@ -117,13 +107,11 @@ export class KaleAlokairuaPage implements OnInit {
     this.http.get<any[]>('http://localhost:8000/api/GetIgerilekuErreserbakUsuarioEguneko/' + this.userId + '/' + data).subscribe(
       (response: any[]) => {
         this.pertsonaErreserbKop = response; // Asignar la respuesta a la variable erreserbaKop
-        console.log('Erreserba kop egunean pertsona: ', this.pertsonaErreserbKop);
   
         // Realizar la segunda solicitud HTTP dentro de la suscripción de la primera
         this.http.get<any[]>('http://localhost:8000/api/GetIgerilekuErreserbakUsuario/' + this.userId).subscribe(
           (response: any[]) => {
             this.pertsonaErreserbaKopTotala = response; // Asignar la respuesta a la variable erreserbaKop
-            console.log('Erreserba kop totala pertsona: ', this.pertsonaErreserbaKopTotala);
             if (this.pertsonaErreserbKop !== undefined && this.pertsonaErreserbKop >= 2) {
               this.presentAlertErreserbaTopeaEguneko();
               return;
@@ -148,7 +136,6 @@ export class KaleAlokairuaPage implements OnInit {
   registrar(formData: any, data: string, selectedOrdua: string) {
     this.http.post('http://localhost:8000/api/IgerilekuErreserbak', formData).subscribe(
       async response => {
-        console.log('Registro exitoso:', response);
         await this.presentAlert(data, selectedOrdua);
       },
       error => {
@@ -159,7 +146,6 @@ export class KaleAlokairuaPage implements OnInit {
   }
   getKalearenOrduak() {
     const formattedDate = new Date(this.selectedDate).toISOString().split('T')[0];
-    console.log('http://localhost:8000/api/GetLibreOrduak/' + this.selectedKalea + '/' + formattedDate)
     this.http.get<any[]>('http://localhost:8000/api/GetLibreOrduak/' + this.selectedKalea + '/' + formattedDate).subscribe(
       (response: any[]) => {
         this.orduakList = response; // Asignar la respuesta a la lista de kaleak

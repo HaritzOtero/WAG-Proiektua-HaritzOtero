@@ -22,7 +22,6 @@ export class GimnasioGestioaPage implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
       this.getKaleakList();
     }
   }
@@ -30,7 +29,6 @@ export class GimnasioGestioaPage implements OnInit {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['userId']) {
       this.userId = state['userId'];
-      console.log(this.userId);
     }
     this.getKaleakList();
   }
@@ -50,7 +48,6 @@ export class GimnasioGestioaPage implements OnInit {
   eliminarGela(gela: any) {
     this.http.delete<any[]>('http://localhost:8000/api/gelak/' + gela.id).subscribe(
       (response: any[]) => {
-        console.log('Gela eliminada:', gela);
         this.cargarGelak(); // Llama a la función para cargar las gelak nuevamente después de eliminar una
       },
       error => {
